@@ -1,133 +1,4 @@
 
-// checking for prime number from number 2 to 10
-// let num = 10
-
-// outer:
-// for(let i = 2; i <= num; i++){
-//   for(let j = 2; j < i; j++){
-//     if(i % j === 0){
-//       continue outer
-//     }
-//   }
-//   alert(i)
-// }
-
-
-// array
-
-// let styles = ["jazz", "blues"]
-// styles.push("roch-n-roll")
-
-// styles[Math.floor(styles.length - 1) / 2] = "classics"
-
-
-// alert(styles.shift())
-
-
-// styles.unshift("rap", "raggae")
-
-// console.log(styles)
-
-
-
-
-
-// count down 10
-/*
-Add code to loop from 10 down to 0. We've provided you with an initializer — let i = 10;.
-For each iteration, create a new paragraph and append it to the output <div>, which we've selected using const output = document.querySelector('.output');. We've provided you with three code lines inside comments that need to be used somewhere inside the loop:
-const para = document.createElement('p'); — creates a new paragraph.
-output.appendChild(para); — appends the paragraph to the output <div>.
-para.textContent = — makes the text inside the paragraph equal to whatever you put on the right-hand side, after the equals sign.
-For the different iteration numbers listed below, write code to insert the required text inside the paragraph (you'll need a conditional statement and multiple para.textContent = lines):
-If the number is 10, print "Countdown 10" to the paragraph.
-If the number is 0, print "Blast off!" to the paragraph.
-For any other number, print just the number to the paragraph.
-*/
-
-const output = document.querySelector(".output");
-output.textContent = "";
-
-let i = 10;
-
-while (i >= 0) {
-  const para = document.createElement('p');
-
-  if (i === 10) {
-    para.textContent = `Countdown ${i}`;
-  } else if (i === 0) {
-    para.textContent = "Blast off!";
-  } else {
-    para.textContent = i;
-  }
-
-  output.appendChild(para);
-  i--;
-}
-
-
-
-// guest list to let in
-
-
-const people = [
-  "Chris", "Anne", "Colin", "Terri",
-  "Phil", "Lola", "Sam", "Kay", "Bruce",
-];
-
-const admitted = document.querySelector(".admitted");
-const refused = document.querySelector(".refused");
-
-let admittedList = [];
-let refusedList = [];
-
-for (const person of people) {
-  if (person === "Phil" || person === "Lola") {
-    refusedList.push(person);
-  } else {
-    admittedList.push(person);
-  }
-}
-
-// take each item in admitted and refused array and join them with comma, then add fullstop to the last item
-admitted.textContent = "Admit: " + admittedList.join(", ") + ".";
-refused.textContent = "Refuse: " + refusedList.join(", ") + ".";
-
-/*
-Sum input numbers
-importance: 4
-Write the function sumInput() that:
-
-Asks the user for values using prompt and stores the values in the array.
-Finishes asking when the user enters a non-numeric value, an empty string, or presses “Cancel”.
-Calculates and returns the sum of array items.
-P.S. A zero 0 is a valid number, please don’t stop the input on zero.
-
-Run the demo
-*/
-
-function sumInput(){
-  let arrs = []
-
-  while (true) {
-let userInput = prompt("Please enter a number", 0)
-
-
-// should we cancel
-if(userInput === "" || userInput === null || !isFinite(userInput)) break
-
-  arrs.push(+userInput)
-  }
-
-let sum = 0
-for (let arr of arrs){
-  sum += arr
-}
-  
-return sum
-}
-
-alert(sumInput())
 /*
 
 🔹 STEP 1: Computer choice
@@ -195,74 +66,78 @@ Call playGame
 
 */
 
+   //  Scores (GLOBAL VARIABLES)
+    let humanScore = 0;
+    let computerScore = 0;
 
-function getComputerChoice(){
-    let randomNumber = Math.floor(Math.random() * 3)
+    // ✅ Computer choice
+    function getComputerChoice() {
+      let randomNumber = Math.floor(Math.random() * 3);
 
-    if(randomNumber === 0){
-        return "rock"
-    }else if(randomNumber === 1){
-        return "paper"
-    }else if(randomNumber === 2){
-        return "scissors"
-    }else{
-        return "Invalid input"
+      if (randomNumber === 0) return "rock";
+      if (randomNumber === 1) return "paper";
+      return "scissors";
     }
-}
 
-function getHumanChoice(){
-    let userInput = prompt("Please enter a choice, rock, paper or scossors").toLowerCase()
+    // Play one round
+    function playRound(humanChoice) {
+      const computerChoice = getComputerChoice();
 
-if(userInput === "rock" || userInput === "paper" || userInput === "scissors"){
-    return userInput
-}else{
-    return "Invalid input"
-}
-}
+      let result = "";
 
-
-function playGame(){
-    let humanScore = 0
-    let computerScore = 0
-
-    function playRound(humanChoice, computerChoice){
-        humanChoice = humanChoice.toLowerCase()
-        
-        if(humanChoice === computerChoice){
-            console.log("It's a draw")
-            return
-        }
-
-        if(
+      if (humanChoice === computerChoice) {
+        result = "It's a draw";
+      } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
-    ){
-        humanScore++
-        console.log(`You win, ${humanChoice} beats ${computerChoice}`)
+      ) {
+        humanScore++;
+        result = `You win! ${humanChoice} beats ${computerChoice}`;
+      } else {
+        computerScore++;
+        result = `You lose! ${computerChoice} beats ${humanChoice}`;
+      }
 
-        }else{
-            computerScore++
-            console.log(`You lose ${computerChoice} beats ${humanChoice}`)
-        }
+      updateUI(result, humanChoice, computerChoice);
     }
 
+    //  Update UI
+    function updateUI(result, human, computer) {
+      const resultDiv = document.getElementById("result");
+      const scoreDiv = document.getElementById("score");
 
- playRound(getHumanChoice(), getComputerChoice())
-    playRound(getHumanChoice(), getComputerChoice())
-    playRound(getHumanChoice(), getComputerChoice())
-    playRound(getHumanChoice(), getComputerChoice())
-    playRound(getHumanChoice(), getComputerChoice())
+      resultDiv.textContent = `You chose ${human}, computer chose ${computer}. ${result}`;
+      scoreDiv.textContent = `Score: You ${humanScore} - ${computerScore} Computer`;
 
-console.log(`final score: You ${humanScore} - ${computerScore} Computer`)
+      checkWinner();
+    }
 
-if(humanScore >  computerScore){
-    console.log("You win the game")
-}else if(computerScore > humanScore){
-    console.log("Computer wins the game")
-}else{
-    console.log("Its a tie")
-}
-}
+    //  Check winner
+    function checkWinner() {
+      if (humanScore === 5) {
+        alert("You won the game!");
+        resetGame();
+      } else if (computerScore === 5) {
+        alert("Computer won the game!");
+        resetGame();
+      }
+    }
 
-playGame()
+    //  Reset game
+    function resetGame() {
+      humanScore = 0;
+      computerScore = 0;
+
+      document.getElementById("result").textContent = "";
+      document.getElementById("score").textContent = "Score: You 0 - 0 Computer";
+    }
+
+    //  Button Event Listeners
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        playRound(button.id);
+      });
+    });
