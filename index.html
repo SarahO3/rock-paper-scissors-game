@@ -1,23 +1,120 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rock Paper Scissors</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock, Paper, Scissors Game</title>
 </head>
 <body>
+  <!-- Pseudocode
+  1. We have 3 buttons that human can pick to play
+  a. Rock
+  b. Papper
+  c. Scissors
+  2. Each button has its own unique id that listens for a click event
+  
+  3. We have a reuslt div to show the result of the game
+  4. We have a score div dive to show game score and the intial value is 0
+  5. We have a choices array that contains 3 choice of rock, paper, scissors
 
-  <h1>Rock Paper Scissors Game</h1>
+  6. We call math.floor and math.randomwith the choices array * 3 for computer choice
 
-  <!-- Buttons -->
-  <button id="rock">Rock</button>
-  <button id="paper">Paper</button>
-  <button id="scissors">Scissors</button>
+  7. We define a result variable and initialise it with an empty ""
+  8. A humanScore variable = 0
+  9. A computer score variabe = 0
+  
+  10. To determain a winner we create a function and pass in human choice and computer score
+  11. We use an if and else statement to determine if human or comupter wins and update the textcontent of reult and score div
+ 
+  12.If human score === computer...its a draw
+  13. If human === rock && computer === scossors ||
+  14. human === paper && computer === rock ||
+  15. human === scissors && computer === paper
+  16. result.textcontent = `You won ${human} beat ${computer}` 
+  humanScore++
+  17. Else {
+   result.textcontent = `You lose ${computer} beat ${human}` 
+  computerScore++
+   }
 
-  <!-- Display Area -->
-  <div id="result"></div>
-  <div id="score"></div>
+const score = document.getElementById("score").textcontent = `You: ${humanScore} | computer ${computerScore}`
+  -->
+  <div class="container">
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
 
-  <script src="script.js"></script>
+    <div id="result"></div>
+    <div id="score">Score: 0 - 0</div>
 
+    <button id="resetBtn">Reset Game</button>
+  </div>
+
+
+<script>
+let humanScore = 0;
+let computerScore = 0;
+
+const resultDiv = document.getElementById("result")
+const scoreDiv = document.getElementById("score")
+
+const buttons = document.querySelectorAll("#rock, #paper, #scissors");
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    
+    const human = button.id;
+    const choices = ["rock", "paper", "scissors"];
+    const computer = choices[Math.floor(Math.random() * 3)];
+
+    let result = "";
+
+    if (human === computer) {
+      result = "Draw";
+       resultDiv.style.color = "gray";
+    } else if (
+      (human === "rock" && computer === "scissors") ||
+      (human === "paper" && computer === "rock") ||
+      (human === "scissors" && computer === "paper")
+    ) {
+      humanScore++;
+      result = "You win!";
+      resultDiv.style.color = "green"
+    } else {
+      computerScore++;
+      result = "You lose!";
+       resultdiv.style.color = "red"
+    }
+
+    resultDiv.textContent =
+      `You: ${human} | Computer: ${computer} → ${result}`;
+
+    scoreDiv.textContent =
+      `Human Score: ${humanScore} -Computer Score: ${computerScore}`;
+ 
+//  check winner 
+if(humanScore === 5 || computerScore === 5){
+  resultDiv.textContent = humanScore === 5 ?
+  "You won the game!"
+  :
+  "Computer won the game!"
+}
+ 
+    });
+});
+
+
+
+// reset game
+document.getElementById("resetBtn").addEventListener("click", () => {
+  humanScore = 0;
+  computerScore = 0;
+
+
+    scoreDiv.textContent = "Score: 0 - 0";
+  resultDiv.textContent = "";
+})
+</script>
 </body>
 </html>
