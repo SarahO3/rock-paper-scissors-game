@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,40 +6,10 @@
   <title>Rock, Paper, Scissors Game</title>
 </head>
 <body>
-  <!-- Pseudocode
-  1. We have 3 buttons that human can pick to play
-  a. Rock
-  b. Papper
-  c. Scissors
-  2. Each button has its own unique id that listens for a click event
-  
-  3. We have a reuslt div to show the result of the game
-  4. We have a score div dive to show game score and the intial value is 0
-  5. We have a choices array that contains 3 choice of rock, paper, scissors
 
-  6. We call math.floor and math.randomwith the choices array * 3 for computer choice
-
-  7. We define a result variable and initialise it with an empty ""
-  8. A humanScore variable = 0
-  9. A computer score variabe = 0
-  
-  10. To determain a winner we create a function and pass in human choice and computer score
-  11. We use an if and else statement to determine if human or comupter wins and update the textcontent of reult and score div
- 
-  12.If human score === computer...its a draw
-  13. If human === rock && computer === scossors ||
-  14. human === paper && computer === rock ||
-  15. human === scissors && computer === paper
-  16. result.textcontent = `You won ${human} beat ${computer}` 
-  humanScore++
-  17. Else {
-   result.textcontent = `You lose ${computer} beat ${human}` 
-  computerScore++
-   }
-
-const score = document.getElementById("score").textcontent = `You: ${humanScore} | computer ${computerScore}`
-  -->
   <div class="container">
+
+    <!-- buttons -->
     <button id="rock">Rock</button>
     <button id="paper">Paper</button>
     <button id="scissors">Scissors</button>
@@ -48,19 +17,43 @@ const score = document.getElementById("score").textcontent = `You: ${humanScore}
     <div id="result"></div>
     <div id="score">Score: 0 - 0</div>
 
+    <p id="para"></p>
     <button id="resetBtn">Reset Game</button>
-  </div>
 
+  </div>
 
 <script>
 let humanScore = 0;
 let computerScore = 0;
 
-const resultDiv = document.getElementById("result")
-const scoreDiv = document.getElementById("score")
+const resultDiv = document.getElementById("result");
+const scoreDiv = document.getElementById("score");
+const para = document.getElementById("para");
+const resetBtn = document.getElementById("resetBtn");
 
 const buttons = document.querySelectorAll("#rock, #paper, #scissors");
 
+// ✅ Random color generator
+function getRandomColor(){
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+// ✅ Hover effect
+buttons.forEach(button => {
+  button.addEventListener("mouseenter", () => {
+    button.style.backgroundColor = getRandomColor();
+  });
+
+  button.addEventListener("mouseleave", () => {
+    button.style.backgroundColor = "";
+  });
+});
+
+// ✅ Click event
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     
@@ -72,7 +65,7 @@ buttons.forEach(button => {
 
     if (human === computer) {
       result = "Draw";
-       resultDiv.style.color = "gray";
+      resultDiv.style.color = "gray";
     } else if (
       (human === "rock" && computer === "scissors") ||
       (human === "paper" && computer === "rock") ||
@@ -80,41 +73,51 @@ buttons.forEach(button => {
     ) {
       humanScore++;
       result = "You win!";
-      resultDiv.style.color = "green"
+      resultDiv.style.color = "green";
     } else {
       computerScore++;
       result = "You lose!";
-       resultdiv.style.color = "red"
+      resultDiv.style.color = "red";
     }
 
     resultDiv.textContent =
       `You: ${human} | Computer: ${computer} → ${result}`;
 
     scoreDiv.textContent =
-      `Human Score: ${humanScore} -Computer Score: ${computerScore}`;
- 
-//  check winner 
-if(humanScore === 5 || computerScore === 5){
-  resultDiv.textContent = humanScore === 5 ?
-  "You won the game!"
-  :
-  "Computer won the game!"
-}
- 
-    });
+      `Human Score: ${humanScore} - Computer Score: ${computerScore}`;
+
+    // ✅ Check winner and disable buttons
+    if (humanScore === 5 || computerScore === 5) {
+      resultDiv.textContent = humanScore === 5 
+        ? "🎉 You won the game!" 
+        : "😢 Computer won the game!";
+
+      buttons.forEach(btn => {
+        btn.disabled = true;
+      });
+
+      para.textContent = "Click the reset button to play again.";
+    }
+
+  });
 });
 
-
-
-// reset game
-document.getElementById("resetBtn").addEventListener("click", () => {
+// ✅ Reset button
+resetBtn.addEventListener("click", () => {
   humanScore = 0;
   computerScore = 0;
 
-
-    scoreDiv.textContent = "Score: 0 - 0";
+  scoreDiv.textContent = "Score: 0 - 0";
   resultDiv.textContent = "";
-})
+  para.textContent = "";
+
+  // Enable buttons again
+  buttons.forEach(btn => {
+    btn.disabled = false;
+  });
+});
+
 </script>
+
 </body>
 </html>
