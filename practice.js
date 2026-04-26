@@ -25,9 +25,6 @@ function camelizeString(str){
 console.log(camelizeString("background-color"));
 
 
-
-
-
 /*
 Write a function filterRange(arr, a, b) that gets an array arr, looks for elements with values higher or equal to a and lower or equal to b and return a result as an array.
 
@@ -380,3 +377,65 @@ return sum
 }
 
 alert(sumInput())
+
+
+
+// object practice to check for an empty object
+
+function isEmpty(obj){
+for(let key in obj){
+  return false
+}
+true
+}
+
+alert(isEmpty(schedule))
+
+
+
+// sum all salaries and store in variable
+
+let salaries = {
+  John: 100,
+  Ann: 160,
+  Pete: 130
+}
+
+// method 1 
+
+let sum = 0;
+for (let key in salaries) {
+  sum += salaries[key];
+}
+
+// method 2
+const sum = Object.values(salaries).reduce((accu, cur) => {
+return accu + cur
+}, 0)
+
+console.log(sum)
+
+// Create a function multiplyNumeric(obj) that multiplies all numeric property values of obj by 2.
+
+function multiplyNumeric(obj){
+ for(let key in obj){
+  if(typeof obj[key] == Number){
+    obj[key] *= 2
+  }
+ }
+}
+
+
+// creating an object method with the this keyword
+
+function Person(name){
+  this.name = name;
+  this.introduce = function(){
+    console.log(`Hi, I'm ${this.name}.`)
+  }
+}
+// call person as a constructor
+const sarah = new Person("sarah")
+sarah.introduce()
+
+

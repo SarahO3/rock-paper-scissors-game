@@ -1,0 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #dddddd;
+}
+
+.container{
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-div{
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+.score-result{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    margin-top: 20ps;
+}
+
+button{
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+}
+

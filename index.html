@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Rock, Paper, Scissors Game</title>
 </head>
 <body>
@@ -10,16 +11,23 @@
   <div class="container">
 
     <!-- buttons -->
+     <div class="btn-div">
     <button id="rock">Rock</button>
     <button id="paper">Paper</button>
     <button id="scissors">Scissors</button>
+</div>
 
+<div class="score-result">
     <div id="result"></div>
     <div id="score">Score: 0 - 0</div>
-
-    <p id="para"></p>
+</div>
+   
+<div class="reset-div">
+<p id="para"></p>
     <button id="resetBtn">Reset Game</button>
+</div>
 
+<!-- end of container div -->
   </div>
 
 <script>
@@ -33,7 +41,7 @@ const resetBtn = document.getElementById("resetBtn");
 
 const buttons = document.querySelectorAll("#rock, #paper, #scissors");
 
-// ✅ Random color generator
+// Random color generator
 function getRandomColor(){
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
@@ -42,7 +50,7 @@ function getRandomColor(){
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-// ✅ Hover effect
+// Hover effect
 buttons.forEach(button => {
   button.addEventListener("mouseenter", () => {
     button.style.backgroundColor = getRandomColor();
@@ -53,7 +61,7 @@ buttons.forEach(button => {
   });
 });
 
-// ✅ Click event
+// Click event
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     
@@ -86,11 +94,11 @@ buttons.forEach(button => {
     scoreDiv.textContent =
       `Human Score: ${humanScore} - Computer Score: ${computerScore}`;
 
-    // ✅ Check winner and disable buttons
+    // Check winner and disable buttons
     if (humanScore === 5 || computerScore === 5) {
       resultDiv.textContent = humanScore === 5 
-        ? "🎉 You won the game!" 
-        : "😢 Computer won the game!";
+        ? "You won the game!" 
+        : "Computer won the game!";
 
       buttons.forEach(btn => {
         btn.disabled = true;
@@ -102,7 +110,7 @@ buttons.forEach(button => {
   });
 });
 
-// ✅ Reset button
+// Reset button
 resetBtn.addEventListener("click", () => {
   humanScore = 0;
   computerScore = 0;
